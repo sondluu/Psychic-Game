@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Psychic Game</title>
+</head>
+<body>
+
+	<h1>The Psychic Game</h1>
+
+	<div id="game">
+		<div id="greeting" class="message">Guess what letter I am thinking of!</div>
+
+		<table>
+			<tr>
+				<td>Wins: </td>
+				<td id="win">0</td>
+			</tr>
+
+			<tr>
+				<td>Losses: </td>
+				<td id="loss">0</td>
+			</tr>
+
+			<tr>
+				<td>Guesses left: </td>
+				<td id = "guessLeft">9</td>
+			</tr>
+
+			<tr>
+				<td>Your Guesses so far: </td>
+				<td id="userGuess"></td>
+			</tr>
+
+			<tr>
+				<td>Your Guess: </td>
+				<td id="userGuessSoFar"></td>
+			</tr>
+
+			<tr>
+				<td>Computer Guess: </td>
+				<td id="computerGuess"></td>
+			</tr>
+
+		</table>
+		
+		<button id="newGameButton" onclick="newGame()">New Game</button>
+
+<script type="text/javascript">
+
+// our array of possible computer guesses:
+var computerChoice = ["a", "b", "c", "d", "e", "f"];
+
+
+// variables for tracking wins and losses, gueses. Each one has a starting point that is displayed ons creen.
+var win = 0;
+var loss = 0;
+var guessLeft = 9;
+var userGuess;
+var computerGuess;
+var userGuessLog = [];
+var userLog="";
+
+
+//when user press a letter the following function will run
+document.onkeyup = function(event) {
+
+	//determine which key was pressed
+	var userGuess = event.key;
+	// console.log(userGuess);
+
+	//set computerGuess to be random:
+	var computerGuess = computerChoice[Math.floor(Math.random() * computerChoice.length)];
+	// console.log(computerGuess);
+
+	userLog=userLog + userGuess;
+	// console.log(userGuessLouserLog);
+
+	//document.getElementById('userGuess').innerHTML = userGuessLog;
+	document.getElementById('userGuess').innerHTML = userLog;
+
+	// create an If function: If user's guess matches computer's guess, then the following will happen:
+	if (userGuess === computerGuess){
+		// get the element that has an id of 'win' then update its contents
+		win++;														// var "win" will increase by 1
+		var winScore = document.getElementById('win');				// the win score will update on screen
+		winScore.textContent = win;
+
+		var userGuessSoFar = document.getElementById('userGuessSoFar');	// grab the element with id of "userGuess"
+		userGuessSoFar.textContent = userGuess;						// update content of this element with the pressed key
+
+	}
+	else{															// otherwise
+		
+		loss ++;													// loss count increases by 1
+		var lossScore = document.getElementById('loss');			// the loss score will update on screen
+		lossScore.textContent = loss;														// "loss" count will increase by 1
+		
+		var userGuessSoFar = document.getElementById('userGuessSoFar');	// grab the element with id of "userGuess"
+		userGuessSoFar.textContent = userGuess;						// update content of this element with the pressed key
+
+		var computerGuessResult = document.getElementById('computerGuess');	// grab the element with id of "computerGuess"
+		computerGuessResult.textContent = computerGuess;					// update this element with the computer guess
+
+		guessLeft--;													// var "guessLeft" will decrease by 1
+		var userRemainingGuess = document.getElementById('guessLeft');	// grab element with id of "guessLeft"
+		userRemainingGuess.textContent = guessLeft;						// the number of remaining guesses will update on screen
+	}
+	
+
+	if (guessLeft === 0 || guessLeft < 0) {								// when the number of guesses becomes 0 or below 0
+		var gameOver = document.getElementById('guessLeft');			// grab element with id of "guessLeft"
+		gameOver.textContent = 'Game Over. Please click New Game to continue.';	// "Game Over statement will appear."
+
+		document.getElementById("win").innerHTML = null;				// win count stops displaying
+		document.getElementById("loss").innerHTML = null;				// win count stops displaying
+    	document.getElementById("userGuess").innerHTML = null;			// Your Guess stops displaying
+    	document.getElementById("userGuessSoFar").innerHTML = null;		// Your Guesses So Far stops displaying
+    	document.getElementById("computerGuess").innerHTML = null;		// Computer Guess stops displaying
+	}
+
+
+} // this is the end of the original function
+	
+
+function newGame() {			// function for New Game button
+	location.reload();			// window reloads when button is clicked
+}
+
+
+</script>
+</body>
+</html>
